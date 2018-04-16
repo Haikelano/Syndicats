@@ -21,5 +21,13 @@ quelque soit votre Ide le projet est fonctionne , importer l'ais
 # lister tous les utilisateur
 http://localhost:8080/user
 
+# Ajouter un user 
+http://localhost:8080/user
+
+exemple :) avec Advenced Rest Client 
+{ "nom":"Haykel","prenom":"maaoui","email":"houka.maa@gmail.com", "tel":53652154 }
+
+
+
 	
 
