@@ -3,9 +3,7 @@ package com.syndicat.syndicats.web;
 import com.syndicat.syndicats.dao.UserRepository;
 import com.syndicat.syndicats.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,12 +11,17 @@ import java.util.List;
 public class UserRestService {
     @Autowired
     private UserRepository userRepository;
+
     @RequestMapping(value = "/users",method = RequestMethod.GET)
     public List<User> getUsers() {
 
         return userRepository.findAll();
     }
 
+    @RequestMapping(value = "/users",method = RequestMethod.POST)
+    public User save(@RequestBody User u) {
 
+        return userRepository.save(u);
+    }
 
 }

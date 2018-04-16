@@ -16,7 +16,10 @@ public class User implements Serializable {
     private String photo;
 
 
-   public User(){ }
+    public User()
+    {
+
+    }
     public Long getId() {
         return id;
     }
