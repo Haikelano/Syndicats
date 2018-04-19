@@ -2,12 +2,11 @@ package com.syndicat.syndicats.controllers;
 
 import com.syndicat.syndicats.Repository.UserRepository;
 import com.syndicat.syndicats.entity.User;
+import com.syndicat.syndicats.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMethod;
 import com.syndicat.syndicats.entity.User;
 
 import javax.validation.Valid;
@@ -16,9 +15,12 @@ import javax.validation.Valid;
 public class UserController {
     @Autowired
 private UserRepository userRepository;
+    private UserService userService;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserService userService) {
+
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/user_list")
@@ -45,10 +47,17 @@ private UserRepository userRepository;
 
         return "index";
     }
-    @RequestMapping("register")
-    public  String registerFom(@Valid @ModelAttribute("user") User user){
+    @RequestMapping("/registration")
+    public String registerForm(@Valid @ModelAttribute("user") User user, @RequestParam(value="error", required=false) String error, @RequestParam(value="logout", required=false) String logout, Model model) {
 
-        return "login/register";
+        return "registration";
+    }
+    @PostMapping("/registration")
+    public  String registration(@Valid @ModelAttribute("user") User user , Model model){
+
+        userService.saveWithUserRole(user);
+
+        return "login";
     }
     @RequestMapping("login")
     public  String loginFom(@Valid @ModelAttribute("user") User user){

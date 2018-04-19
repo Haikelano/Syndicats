@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.syndicat.syndicats.entity.Role;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -17,10 +18,6 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    public UserService() {
-
-    }
-
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
@@ -28,13 +25,20 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void saveWithUserRole(User user){
+    // add user role
+    public void saveWithUserRole(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles((Set<Role>) roleRepository.findByRole("ROLE_USER"));
-        userRepository.save(user);    }
+        user.setRoles(roleRepository.findByRole("ROLE_USER"));
+        userRepository.save(user);
+    }
+
+    public void updateWithUserRole(User user) {
+        user.setRoles(roleRepository.findByRole("ROLE_USER"));
+        userRepository.save(user);
+    }
 
 
-     public void saveUserWithAdminRole(User user){
+    public void saveUserWithAdminRole(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles((Set<Role>) roleRepository.findByRole("ROLE_ADMIN"));
         userRepository.save(user);
@@ -44,4 +48,8 @@ public class UserService {
         return userRepository.findByLogin(login);
 
      }
+    public List<User> all(){
+        return (List<User>) userRepository.findAll();
+    }
+
 }

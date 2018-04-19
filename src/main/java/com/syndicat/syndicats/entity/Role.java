@@ -9,8 +9,7 @@ public class Role {
 
     @Id
     @GeneratedValue
-    @Column(name = "role_id")
-    private long id;
+    private Long id;
 
     @Column(name = "role")
     private String role;

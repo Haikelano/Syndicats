@@ -25,16 +25,7 @@ public BCryptPasswordEncoder bCryptPasswordEncoder(){
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-                 http.authorizeRequests()
-                .antMatchers("/","/register").
-                        permitAll().anyRequest().
-                        authenticated()
-                        .and()
-                        .formLogin()
-                         .loginPage("/login")
-                         .permitAll()
-                         .and()
-                         .logout().permitAll();
+
     }
 
 
