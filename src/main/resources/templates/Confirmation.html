@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"
+          th:href="@{css/bootstrap.min.css}">
+
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1> L'ajout est bien fait avec les enregistrement suivants</h1>
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label>ID : </label>
+                <label th:text="${ users.get().getId() }"></label>
+
+            </div>
+            <div class="form-group">
+                <label>Votre nom est :</label>
+                <label th:text="${users.get().getNom()}"></label>
+
+            </div>
+            <div class="form-group">
+                <label>Votre Prenom est :</label>
+                <label th:text="${users.get().getPrenom()}"></label>
+            </div>
+            <div class="form-group">
+                <label>Votre mail est :</label>
+                <label th:text="${users.get().getEmail()}"></label>
+            </div>
+            <div class="form-group">
+                <label>Votre Télephone est :</label>
+                <label th:text="${users.get().getTel()}"></label>
+            </div>
+            <div class="form-group">
+                <label>Votre Password  est :</label>
+                <label th:text="${users.get().getPassword()}"></label>
+            </div>
+
+        </div>
+</div>
+</div>
+    <script src="../static/js/bootstrap.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,26 +1,44 @@
 package com.syndicat.syndicats.entity;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
+
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    private String login;
     private String nom;
     private String prenom;
     private String dateNaissence;
+    @Email
     private String email;
     private long tel;
     private String photo;
+    private String password;
+    @Column(name = "active")
+    @ColumnDefault(value = "1")
+    private int active;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
-
-    public User()
-    {
+    public User(User user) {
 
     }
+    public User(){
+
+    }
+
     public Long getId() {
         return id;
     }
@@ -29,6 +47,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
     public String getNom() {
         return nom;
     }
@@ -76,25 +101,58 @@ public class User implements Serializable {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+    public String getPassword() {
+        return password;
+    }
 
-    public User(String nom, String prenom, String dateNaissence, String email, long tel, String photo) {
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+
+
+    public User(String nom, String login, String prenom, String dateNaissence, String email, long tel, String photo, String password, int active, Set<Role> roles) {
+        this.active = active;
+        this.roles = roles;
+        this.login = login;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissence = dateNaissence;
         this.email = email;
         this.tel = tel;
         this.photo = photo;
+        this.password = password;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "nom='" + nom + '\'' +
+                "login='" + login + '\'' +
+                ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", dateNaissence='" + dateNaissence + '\'' +
                 ", email='" + email + '\'' +
                 ", tel=" + tel +
                 ", photo='" + photo + '\'' +
+                ", password='" + password + '\'' +
+                ", active=" + active +
+                ", roles=" + roles +
                 '}';
     }
 }
