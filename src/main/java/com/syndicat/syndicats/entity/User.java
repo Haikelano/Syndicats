@@ -6,21 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-
+import com.syndicat.syndicats.entity.Role;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    @Size(min = 3,max = 200, message = "Login cannot be blank .")
     private String login;
     private String nom;
     private String prenom;
     private String dateNaissence;
-    @Email
+    @Email(message = "Invalid email format . EX: user@user.com")
     private String email;
     private long tel;
     private String photo;

@@ -1,15 +1,16 @@
 package com.syndicat.syndicats.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "role")
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "role_id")
-    private int roleId;
+    private long id;
 
     @Column(name = "role")
     private String role;
@@ -17,12 +18,12 @@ public class Role {
     public Role() {
     }
 
-    public int getRoleId() {
-        return roleId;
+    public long getId() {
+        return id;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getRole() {
@@ -31,6 +32,17 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
 

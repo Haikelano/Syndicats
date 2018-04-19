@@ -1,12 +1,14 @@
 package com.syndicat.syndicats.controllers;
 
-import com.syndicat.syndicats.dao.UserRepository;
+import com.syndicat.syndicats.Repository.UserRepository;
 import com.syndicat.syndicats.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.syndicat.syndicats.entity.User;
 
 import javax.validation.Valid;
 
@@ -42,5 +44,15 @@ private UserRepository userRepository;
     public String home(){
 
         return "index";
+    }
+    @RequestMapping("register")
+    public  String registerFom(@Valid @ModelAttribute("user") User user){
+
+        return "login/register";
+    }
+    @RequestMapping("login")
+    public  String loginFom(@Valid @ModelAttribute("user") User user){
+
+        return "login";
     }
 }

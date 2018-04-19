@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+import com.syndicat.syndicats.entity.Role;
 
 public class CustomUserDetails extends User implements UserDetails {
 
