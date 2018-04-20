@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,10 +24,15 @@ public class User implements Serializable {
     private String nom;
     private String prenom;
     private String dateNaissence;
-    @Email(message = "Invalid email format . EX: user@user.com")
     private String email;
     private long tel;
+    @Column
+    private Date created_at;
+
+    @Column
+    private Date updated_at;
     private String photo;
+    @Transient
     private String password;
     @Column(name = "active")
     @ColumnDefault(value = "1")
@@ -56,6 +62,17 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    // created_at, updated_at
+
+    @PrePersist
+    protected void onCreate(){
+        this.created_at = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
+        this.updated_at = new Date();
+    }
     public Long getId() {
         return id;
     }
@@ -143,6 +160,31 @@ public class User implements Serializable {
     }
 
 
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public boolean checkIfAdmin() {
+        List<Role> roles = this.getRoles();
+        for (int i = 0; i < roles.size(); i++) {
+            if (roles.get(i).getRole().equals("ROLE_ADMIN")) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     @Override
