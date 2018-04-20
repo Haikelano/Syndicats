@@ -32,7 +32,6 @@ public class User implements Serializable {
     @Column
     private Date updated_at;
     private String photo;
-    @Transient
     private String password;
     @Column(name = "active")
     @ColumnDefault(value = "1")
