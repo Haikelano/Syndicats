@@ -23,11 +23,10 @@ private UserRepository userRepository;
         this.userRepository = userRepository;
         this.userService = userService;
     }
-/*
-    @RequestMapping(value="/")
-    public String home(){  return "index";   }*/
+
+
     // This page loads on successful login.
-    @RequestMapping(value = {"/", "/index"})
+    @RequestMapping(value = {"/", "/index","error"})
     public String home(Principal principal, Model model) {
 
         String username = principal.getName();

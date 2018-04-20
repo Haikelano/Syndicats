@@ -28,7 +28,6 @@ public class User implements Serializable {
     private long tel;
     @Column
     private Date created_at;
-
     @Column
     private Date updated_at;
     private String photo;

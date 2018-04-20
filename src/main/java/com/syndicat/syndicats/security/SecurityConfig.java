@@ -26,28 +26,22 @@ public BCryptPasswordEncoder bCryptPasswordEncoder(){
     return new BCryptPasswordEncoder();
             }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-
-    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/**").hasAuthority("ROLE_USER").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/index")
-                .usernameParameter("login")
+                .antMatchers("/static/**", "/registration").permitAll()
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().defaultSuccessUrl("/index")
+                .loginPage("/login")
+                .permitAll().usernameParameter("login")
                 .passwordParameter("password")
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .and()
+                .logout()
+                .permitAll();
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
