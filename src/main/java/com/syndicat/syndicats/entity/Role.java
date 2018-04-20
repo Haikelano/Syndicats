@@ -1,47 +1,61 @@
 package com.syndicat.syndicats.entity;
 
-import javax.persistence.*;
 import java.util.List;
+import javax.persistence.*;
+
 
 @Entity
-@Table(name = "role")
+@Table(name="roles")
 public class Role {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "role")
+    @Column
     private String role;
-
-    public Role() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+
+    // constructors
+
+    public Role() {
+
+    }
+
+    public Role(String role) {
+        super();
+        this.role = role;
+    }
+
+    // getters
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return role;
+    }
 
     public List<User> getUsers() {
         return users;
     }
 
+    // setters
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.role = name;
+    }
+
     public void setUsers(List<User> users) {
         this.users = users;
     }
-}
 
+
+}

@@ -40,7 +40,7 @@ public class UserService {
 
     public void saveUserWithAdminRole(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles((Set<Role>) roleRepository.findByRole("ROLE_ADMIN"));
+        user.setRoles(roleRepository.findByRole("ROLE_ADMIN"));
         userRepository.save(user);
 
      }

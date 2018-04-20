@@ -9,10 +9,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import com.syndicat.syndicats.entity.Role;
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements Serializable {
     @Id
     @GeneratedValue
@@ -30,15 +31,29 @@ public class User implements Serializable {
     @Column(name = "active")
     @ColumnDefault(value = "1")
     private int active;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
 
-    public User(User user) {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+    public User() {
 
     }
-    public User(){
 
+    public User(String nom, String login, String prenom, String dateNaissence, String email, long tel, String photo, String password, int active, List<Role> roles) {
+        super();
+        this.active = active;
+        this.roles = roles;
+        this.login = login;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissence = dateNaissence;
+        this.email = email;
+        this.tel = tel;
+        this.photo = photo;
+        this.password = password;
     }
 
     public Long getId() {
@@ -119,28 +134,16 @@ public class User implements Serializable {
         this.active = active;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
 
 
-    public User(String nom, String login, String prenom, String dateNaissence, String email, long tel, String photo, String password, int active, Set<Role> roles) {
-        this.active = active;
-        this.roles = roles;
-        this.login = login;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateNaissence = dateNaissence;
-        this.email = email;
-        this.tel = tel;
-        this.photo = photo;
-        this.password = password;
-    }
 
     @Override
     public String toString() {
