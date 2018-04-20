@@ -26,7 +26,7 @@ private UserRepository userRepository;
 
 
     // This page loads on successful login.
-    @RequestMapping(value = {"/", "/index","error"})
+    @RequestMapping(value = "/")
     public String home(Principal principal, Model model) {
 
         String username = principal.getName();
@@ -45,6 +45,9 @@ private UserRepository userRepository;
         return "index";
 
     }
+
+
+
     @RequestMapping("/login")
     public String loginReg(@Valid @ModelAttribute("user") User user, @RequestParam(value="error", required=false) String error, @RequestParam(value="logout", required=false) String logout, Model model) {
         if(error != null) {

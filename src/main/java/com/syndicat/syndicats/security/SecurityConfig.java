@@ -31,11 +31,11 @@ public BCryptPasswordEncoder bCryptPasswordEncoder(){
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
-                .antMatchers("/static/**", "/registration").permitAll()
+                .antMatchers("/static/**", "/registration","/login").permitAll()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
-                .and()
-                .formLogin().defaultSuccessUrl("/index")
+                .and().csrf().disable()
+                .formLogin().defaultSuccessUrl("/")
                 .loginPage("/login")
                 .permitAll().usernameParameter("login")
                 .passwordParameter("password")
